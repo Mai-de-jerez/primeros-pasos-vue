@@ -1,0 +1,84 @@
+<template>
+  <div class="login-container">
+    <h2>Iniciar sesión</h2>
+    <div class="login-form">
+      <input v-model="credentials.username" placeholder="Usuario" class="login-input" />
+      <input v-model="credentials.password" type="password" placeholder="Contraseña" class="login-input" />
+      <button class="login-btn" @click="login">Entrar</button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
+const credentials = ref({
+    username: '',
+    password: ''
+})
+
+function login() {
+  if (credentials.value.username === 'admin' && credentials.value.password === 'admin') {
+    toast.success('¡Login exitoso! Bienvenido, admin 👋')
+  } else {
+    credentials.value.username = ''
+    credentials.value.password = ''
+    toast.error('Credenciales incorrectas')
+  }
+}
+</script>
+
+<style scoped>
+.login-container {
+  max-width: 360px;
+  margin: 60px auto;
+  background: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+h2 {
+  text-align: center;
+  color: #2d3748;
+  margin: 0 0 24px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-input {
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: #4a90e2;
+}
+
+.login-btn {
+  padding: 12px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login-btn:hover {
+  background: #357abd;
+}
+</style>
