@@ -5,6 +5,7 @@
       <input v-model="credentials.username" placeholder="Usuario" class="login-input" />
       <input v-model="credentials.password" type="password" placeholder="Contraseña" class="login-input" />
       <button class="login-btn" @click="login">Entrar</button>
+      <button class="home-btn" @click="goHome">Volver al home</button>
     </div>
   </div>
 </template>
@@ -12,8 +13,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 
 const toast = useToast()
+const router = useRouter()
 const credentials = ref({
     username: '',
     password: ''
@@ -22,11 +25,16 @@ const credentials = ref({
 function login() {
   if (credentials.value.username === 'admin' && credentials.value.password === 'admin') {
     toast.success('¡Login exitoso! Bienvenido, admin 👋')
+    router.push('/')
   } else {
     credentials.value.username = ''
     credentials.value.password = ''
     toast.error('Credenciales incorrectas')
   }
+}
+
+function goHome() {
+  router.push('/')
 }
 </script>
 
@@ -80,5 +88,21 @@ h2 {
 
 .login-btn:hover {
   background: #357abd;
+}
+
+.home-btn {
+  padding: 12px;
+  background: #e2e8f0;
+  color: #2d3748;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.home-btn:hover {
+  background: #cbd5e0;
 }
 </style>

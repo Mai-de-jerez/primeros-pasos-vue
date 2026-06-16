@@ -30,18 +30,8 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue' 
-
-// con props recibimos el carrito desde el componente padre (App.vue) y podemos mostrarlo en este componente
-const props = defineProps(['carrito'])
-
-// computed recalcula totalPrecio automáticamente cada vez que cambia el carrito
-// a diferencia de una función normal, Vue cachea el resultado y solo lo recalcula
-// cuando alguna de sus dependencias reactivas cambia (en este caso, props.carrito)
-const totalPrecio = computed(() => 
-  props.carrito.reduce((acc, p) => acc + p.price * p.cantidad, 0)
-)
-
+import { useCarritoStore } from '../stores/CarritoStore'
+const { carrito, totalPrecio } = useCarritoStore()
 </script>
 
 <style scoped>

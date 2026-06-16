@@ -1,4 +1,5 @@
 <template> 
+  <p>{{ titulo }}</p>
   <div>
     <p>{{ contadorValue }}</p>
     <button @click="sumarleUno">+</button>

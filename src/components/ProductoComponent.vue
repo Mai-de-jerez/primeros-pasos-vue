@@ -9,7 +9,6 @@
 
     <ContadorComponent 
       class="mi-contador" 
-      :titulo="producto.name"
       @contadorCambiado="cantidadSeleccionada = $event"
       @contadorNegativoIntento="$emit('contadorNegativoIntento')"
     />
