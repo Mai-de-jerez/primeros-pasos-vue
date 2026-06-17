@@ -4,7 +4,9 @@ import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 import router from './router'
 import './assets/main.css'
+import { createPinia } from 'pinia'
 
+const pinia = createPinia()
 const app = createApp(App)
 
 app.use(Toast, {
@@ -12,5 +14,6 @@ app.use(Toast, {
   timeout: 3000,
 })
 
+app.use(pinia)
 app.use(router) 
 app.mount('#app')

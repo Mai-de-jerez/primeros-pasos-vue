@@ -30,8 +30,10 @@
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia'
 import { useCarritoStore } from '../stores/CarritoStore'
-const { carrito, totalPrecio } = useCarritoStore()
+const carritoStore = useCarritoStore()
+const { carrito, totalPrecio } = storeToRefs(carritoStore)
 </script>
 
 <style scoped>

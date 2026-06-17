@@ -1,5 +1,7 @@
 // src/stores/AuthStore.js
+import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { useCarritoStore } from './CarritoStore'
 
 // Seed inicial — si no hay usuarios en localStorage los creamos
 if (!localStorage.getItem('usuarios')) {
@@ -12,16 +14,16 @@ if (!localStorage.getItem('usuarios')) {
   ]))
 }
 
-const usuarioActivo = ref(JSON.parse(localStorage.getItem('sesion')) || null)
-
-export function useAuthStore() {
-
+export const useAuthStore = defineStore('auth', () => {
+  const usuarioActivo = ref(JSON.parse(localStorage.getItem('sesion')) || null)
   const isLoggedIn = computed(() => usuarioActivo.value !== null)
 
   function login(username, password) {
+    const carritoStore = useCarritoStore()
     const usuarios = JSON.parse(localStorage.getItem('usuarios'))
     const encontrado = usuarios.find(u => u.username === username && u.password === password)
     if (encontrado) {
+      carritoStore.limpiarCarrito()
       usuarioActivo.value = { username: encontrado.username }
       localStorage.setItem('sesion', JSON.stringify(usuarioActivo.value))
       return true
@@ -30,6 +32,8 @@ export function useAuthStore() {
   }
 
   function logout() {
+    const carritoStore = useCarritoStore()
+    carritoStore.limpiarCarrito()
     usuarioActivo.value = null
     localStorage.removeItem('sesion')
   }
@@ -50,4 +54,4 @@ export function useAuthStore() {
     logout,
     registro
   }
-}
+})

@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import CartView from '../views/CartView.vue'
 import MainLayout from '../layouts/MainLayout.vue'
 import AuthLayout from '../layouts/AuthLayout.vue'
+import { useAuthStore } from '../stores/AuthStore'
 
 const routes = [
   {
@@ -24,6 +25,16 @@ const routes = [
         path: '/shop', 
         name: 'shop',
         component: () => import('../views/ShopView.vue')
+      },
+      {
+        path: '/checkout',
+        name: 'checkout',
+        component: () => import('../views/CheckoutView.vue')
+      },
+      {
+        path: '/checkout/success',
+        name: 'checkout-success',
+        component: () => import('../views/CheckoutSuccessView.vue')
       }
     ]
   },
@@ -49,6 +60,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to) => {
+  const authStore = useAuthStore()
+
+  if ((to.name === 'carrito' || to.name === 'checkout' || to.name === 'checkout-success') && !authStore.isLoggedIn) {
+    return { name: 'login' }
+  }
+
+  return true
 })
 
 export default router

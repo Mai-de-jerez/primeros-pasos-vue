@@ -3,29 +3,31 @@
     <RouterLink to="/" class="nav-button">🏠 Home</RouterLink>
     <RouterLink to="/shop" class="nav-button">🛍️ Tienda</RouterLink>
 
-    <RouterLink v-if="isLoggedIn" to="/carrito" class="nav-button">
+    <RouterLink v-if="authStore.isLoggedIn" to="/carrito" class="nav-button">
       🛒 Carrito
       <span v-if="carritoCount > 0" class="badge">{{ carritoCount }}</span>
     </RouterLink>
 
-    <RouterLink v-if="!isLoggedIn" to="/login" class="nav-button">🔐 Login</RouterLink>
+    <RouterLink v-if="!authStore.isLoggedIn" to="/login" class="nav-button">🔐 Login</RouterLink>
     <button v-else class="nav-button" @click="handleLogout">🚪 Cerrar sesión</button>
   </nav>
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia'
 import { useCarritoStore } from '../stores/CarritoStore'
 import { useAuthStore } from '../stores/AuthStore'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 
-const { carritoCount } = useCarritoStore()
-const { isLoggedIn, logout } = useAuthStore()
+const carritoStore = useCarritoStore()
+const { carritoCount } = storeToRefs(carritoStore)
+const authStore = useAuthStore()
 const router = useRouter()
 const toast = useToast()
 
 function handleLogout() {
-  logout()
+  authStore.logout()
   toast.success('Sesión cerrada')
   router.push('/')
 }

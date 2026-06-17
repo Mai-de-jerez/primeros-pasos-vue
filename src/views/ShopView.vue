@@ -47,7 +47,7 @@ const productosPaginados = computed(() => {
   return tiendaFiltrada.value.slice(inicio, inicio + PRODUCTOS_POR_PAGINA)
 })
 
-const { isLoggedIn } = useAuthStore()
+const authStore = useAuthStore()
 
 const toast = useToast()
 const busqueda = ref('')
@@ -69,7 +69,7 @@ function mostrarAvisoNegativo() {
 
 function lanzarToastProducto({ producto, cantidad }) {
   // si no esta logueado, mostramos un toast de error y no se añade nada al carrito
-  if (!isLoggedIn.value) {
+  if (!authStore.isLoggedIn) {
     toast.error('¡Inicia sesión para comprar!')
     return
   }

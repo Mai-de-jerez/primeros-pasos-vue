@@ -1,33 +1,24 @@
 <template>
-    <Navbar :carrito="carrito" />
-    <RouterView :carrito="carrito" @comprar-producto="redireccionarEvento" />
+  <div class="layout">
+    <Navbar />
+    <RouterView />
     <footer class="layout-footer">
-        <p>© 2026 Mi Tienda de Vue - María del Carmen Martín Rodríguez</p>
+      <p>© 2026 Mi Tienda de Vue - María del Carmen Martín Rodríguez</p>
     </footer>
+  </div>
 </template>
 
 <script setup>
 import Navbar from '../components/NavBarComponent.vue'
-import { defineProps, defineEmits } from 'vue'
-
-// Recibimos el carrito desde el componente raíz (App.vue)
-defineProps({
-  carrito: {
-    type: Array,
-    required: true
-  }
-})
-
-// Declaramos el emit para poder enviar los datos del producto hacia arriba (App.vue)
-const emit = defineEmits(['comprar-producto'])
-
-// Función puente: captura el evento de ShopView y se lo lanza a App.vue
-function redireccionarEvento(datos) {
-  emit('comprar-producto', datos)
-}
 </script>
 
 <style scoped>
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 .layout-footer {
   text-align: center;
