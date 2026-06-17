@@ -1,4 +1,4 @@
-// src/composables/CarritoStore.js
+// src/stores/CarritoStore.js
 import { ref, computed } from 'vue'
 
 const carrito = ref([])

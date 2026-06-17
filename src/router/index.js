@@ -1,11 +1,14 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue' 
+import CartView from '../views/CartView.vue'
+import MainLayout from '../layouts/MainLayout.vue'
+import AuthLayout from '../layouts/AuthLayout.vue'
 
 const routes = [
   {
     path: '/',
-    component: () => import('../layouts/MainLayout.vue'), 
+    component: MainLayout,
     children: [
       {
         path: '/', 
@@ -13,9 +16,9 @@ const routes = [
         component: HomeView
       },
       {
-        path: '/carrito', 
+        path: '/carrito',
         name: 'carrito',
-        component: () => import('../views/CartView.vue') 
+        component: CartView
       },
       {
         path: '/shop', 
@@ -27,19 +30,24 @@ const routes = [
   
   {
     path: '/',
-    component: () => import('../layouts/AuthLayout.vue'),
+    component: AuthLayout,
     children: [
       {
-        path: 'login', 
+        path: '/login', 
         name: 'login',
         component: () => import('../views/LoginView.vue')
+      },
+      {
+        path: '/registro', 
+        name: 'registro',
+        component: () => import('../views/RegisterView.vue')
       }
     ]
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
 

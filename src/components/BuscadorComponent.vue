@@ -21,12 +21,10 @@ defineEmits(['update:modelValue'])
 <style scoped>
 .buscador-container {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 8px;
-  margin: 16px auto;
-  max-width: 400px;
   position: relative;
+  width: 300px;
 }
 
 .buscador {

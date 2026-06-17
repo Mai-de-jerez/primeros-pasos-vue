@@ -5,15 +5,15 @@
     <!-- :valorInicialContador → prop dinámica (v-bind) que inicializa el contador en 5 -->
     <!-- @contadorNegativo → escucha el emit del hijo y llama a lanzarToast con el valor recibido -->
     <p>Este contador lo inicializamos en 5 con :valorInicialContador="5" y le ponemos un titulo gracias a la prop 'titulo':</p>
-    <ContadorComponent v-if="aparecer" titulo="Contador Título 1" :valorInicialContador="5"></ContadorComponent>
+     <div><ContadorComponent v-if="aparecer" titulo="Contador Título 1" :valorInicialContador="5"></ContadorComponent></div>
     <p>Este contador nos avisamos si ponemos un valor negativo gracias al evento 'contadorNegativoIntento' y otro titulo distinto:</p>
     <!-- titulo sin : → prop estática, se pasa como string directamente sin JavaScript -->
     <!-- @contadorNegativoIntento → escucha el emit del hijo y muestra un toast de error -->
-    <ContadorComponent v-if="aparecer" titulo="Contador Título 2" @contadorNegativoIntento="mostrarAvisoNegativo"></ContadorComponent>
+    <div><ContadorComponent v-if="aparecer" titulo="Contador Título 2" @contadorNegativoIntento="mostrarAvisoNegativo"></ContadorComponent></div>
     <p>Este contador envía su valor en tiempo real al componente padre usando el evento '@contadorCambiado' y guarda el dato en la variable reactiva 'ultimoReset' gracias a $event:</p>
     <!-- :titulo → prop dinámica que recibe el name del primer producto del array tienda -->
     <!-- @contadorCambiado → cada vez que cambia el contador, $event guarda el valor emitido en ultimoReset -->
-    <ContadorComponent v-if="aparecer" :titulo="tienda[0].name" @contadorCambiado= "ultimoReset = $event"></ContadorComponent>
+    <div><ContadorComponent v-if="aparecer" :titulo="tienda[0].name" @contadorCambiado= "ultimoReset = $event"></ContadorComponent></div>
     <p v-if="ultimoReset !== null">
       El último valor recibido en el padre es: <strong>{{ ultimoReset }}</strong>
     </p>

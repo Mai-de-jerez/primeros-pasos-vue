@@ -2,19 +2,33 @@
   <nav class="navbar">
     <RouterLink to="/" class="nav-button">🏠 Home</RouterLink>
     <RouterLink to="/shop" class="nav-button">🛍️ Tienda</RouterLink>
-    
-    <RouterLink to="/carrito" class="nav-button">
-      🛒 Carrito 
+
+    <RouterLink v-if="isLoggedIn" to="/carrito" class="nav-button">
+      🛒 Carrito
       <span v-if="carritoCount > 0" class="badge">{{ carritoCount }}</span>
     </RouterLink>
-    
-    <RouterLink to="/login" class="nav-button">🔐 Login</RouterLink>
+
+    <RouterLink v-if="!isLoggedIn" to="/login" class="nav-button">🔐 Login</RouterLink>
+    <button v-else class="nav-button" @click="handleLogout">🚪 Cerrar sesión</button>
   </nav>
 </template>
 
 <script setup>
 import { useCarritoStore } from '../stores/CarritoStore'
+import { useAuthStore } from '../stores/AuthStore'
+import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+
 const { carritoCount } = useCarritoStore()
+const { isLoggedIn, logout } = useAuthStore()
+const router = useRouter()
+const toast = useToast()
+
+function handleLogout() {
+  logout()
+  toast.success('Sesión cerrada')
+  router.push('/')
+}
 </script>
 
 <style scoped>
@@ -28,7 +42,6 @@ const { carritoCount } = useCarritoStore()
   margin-bottom: 20px;
 }
 
-/* Aplicamos tus estilos de botón a los enlaces de RouterLink */
 .navbar .nav-button {
   padding: 10px 24px;
   border: 2px solid #4a90e2;
@@ -37,13 +50,12 @@ const { carritoCount } = useCarritoStore()
   color: #4a90e2;
   font-weight: bold;
   cursor: pointer;
-  text-decoration: none; /* Quitamos el subrayado por defecto de los enlaces */
+  text-decoration: none; 
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
 }
 
-/* Vue Router aplica automáticamente esta clase al enlace activo */
 .navbar .nav-button.router-link-active {
   background: #4a90e2;
   color: white;
