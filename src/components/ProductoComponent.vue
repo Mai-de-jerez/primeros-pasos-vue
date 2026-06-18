@@ -16,22 +16,28 @@
     <button class="btn-comprar" v-if="props.producto.quantity == 1" @click="enviarEvento()">Comprar Unidad</button>
     <button class="btn-comprar" v-else-if="props.producto.quantity<5" @click="enviarEvento()">Comprar pack</button>
     <button class="btn-comprar" v-else @click="enviarEvento()">Comprar Lote</button>
+    <button class="btn-detalle" @click="verDetalle()">Ver detalle</button>
   </div>
 </template>
 
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue'
 import ContadorComponent from './ContadorComponent.vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps(['producto'])
 const emit = defineEmits(['comprar', 'contadorNegativoIntento'])
-
 const cantidadSeleccionada = ref(0)
+const router = useRouter()
 
 function enviarEvento() {
   if (cantidadSeleccionada.value === 0) return
   emit('comprar', { producto: props.producto, cantidad: cantidadSeleccionada.value })
 }
+
+function verDetalle() {
+  router.push(`/shop/${props.producto.id}`)
+} 
 </script>
 
 <style scoped>
@@ -100,6 +106,23 @@ function enviarEvento() {
 
 .btn-comprar:hover {
   background-color: #357abd;
+}
+
+.btn-detalle {
+  width: 100%;
+  padding: 10px;
+  background: white;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-detalle:hover {
+  background: #f0f7ff;
 }
 
 .producto-img {

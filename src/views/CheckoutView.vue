@@ -78,8 +78,8 @@
 			<p v-if="checkoutStore.paymentStatus === checkoutStore.PAYMENT_STATUS.SUCCESS" class="msg ok">
 				Pago completado.
 			</p>
-
-			<button type="submit" :disabled="isProcessing || pagoConfirmado">
+			<button class="btn-volver" type="button" @click="volverAlCarrito">Volver al carrito</button>
+			<button class="btn-pagar" type="submit" :disabled="isProcessing || pagoConfirmado">
 				{{ isProcessing ? 'Procesando...' : pagoConfirmado ? 'Pago ya procesado' : 'Pagar' }}
 			</button>
 		</form>
@@ -87,11 +87,11 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useCarritoStore } from '../stores/CarritoStore'
 import { useCheckoutStore } from '../stores/CheckoutStore'
+import { computed, reactive, ref, onMounted } from 'vue'
 
 const carritoStore = useCarritoStore()
 const checkoutStore = useCheckoutStore()
@@ -121,6 +121,10 @@ const errores = reactive({
 
 const pagoConfirmado = ref(false)
 const isProcessing = computed(() => checkoutStore.paymentStatus === checkoutStore.PAYMENT_STATUS.PROCESSING)
+
+onMounted(() => {
+  checkoutStore.resetCheckout()
+})
 
 function limpiarErrores() {
 	Object.keys(errores).forEach((k) => {
@@ -191,24 +195,153 @@ async function pagar() {
 	pagoConfirmado.value = true
 	router.push({ name: 'checkout-success' })
 }
+
+function volverAlCarrito() {
+	router.push({ name: 'carrito' })
+}
 </script>
 
 <style scoped>
 .title {
-    text-align: center;
+  text-align: center;
+  margin-bottom: 24px;
 }
+
 .title h3 {
   color: #4a90e2;
+  font-size: 1.8rem;
+  font-weight: 800;
 }
-.checkout { max-width: 640px; margin: 24px auto; padding: 0 14px; }
-.form { display: grid; gap: 8px; }
-label { display: grid; gap: 4px; font-weight: 600; }
-input, select, button { padding: 10px; border-radius: 8px; border: 1px solid #cbd5e0; }
-.bloque { border: 1px dashed #cbd5e0; border-radius: 8px; padding: 10px; }
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.resumen { display: flex; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e2e8f0; }
-.error { color: #c53030; font-size: 0.88rem; margin: 0; }
-.msg { margin: 8px 0; }
-.msg.warn { color: #975a16; }
-.msg.ok { color: #2f855a; }
+
+.checkout {
+  max-width: 560px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(74, 144, 226, 0.08);
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+input, select {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+input:focus, select:focus {
+  border-color: #4a90e2;
+}
+
+.bloque {
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  background: #f8fafc;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.resumen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #f0f7ff;
+  border-radius: 10px;
+  border: 1px solid #bee3f8;
+  font-size: 1.1rem;
+  color: #2d3748;
+}
+
+.resumen strong {
+  color: #4a90e2;
+  font-size: 1.3rem;
+}
+
+.btn-volver {
+  padding: 12px;
+  background: white;
+  color: #4a90e2;
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-volver:hover {
+  background: #f0f7ff;
+}
+
+.btn-pagar {
+  padding: 14px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-pagar:hover:not(:disabled) {
+  background: #357abd;
+}
+
+.btn-pagar:disabled {
+  background: #a0bfe0;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #c53030;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.msg {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.msg.warn {
+  background: #fffbeb;
+  color: #975a16;
+  border: 1px solid #f6e05e;
+}
+
+.msg.ok {
+  background: #f0fff4;
+  color: #2f855a;
+  border: 1px solid #9ae6b4;
+}
 </style>

@@ -27,6 +27,11 @@ const routes = [
         component: () => import('../views/ShopView.vue')
       },
       {
+        path: '/shop/:id',
+        name: 'producto-detalle',
+        component: () => import('../views/ProductoDetailView.vue')
+      },
+      {
         path: '/checkout',
         name: 'checkout',
         component: () => import('../views/CheckoutView.vue')
@@ -38,7 +43,7 @@ const routes = [
       }
     ]
   },
-  
+
   {
     path: '/',
     component: AuthLayout,
@@ -52,6 +57,11 @@ const routes = [
         path: '/registro', 
         name: 'registro',
         component: () => import('../views/RegisterView.vue')
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: () => import('../views/NotFoundView.vue')
       }
     ]
   }
