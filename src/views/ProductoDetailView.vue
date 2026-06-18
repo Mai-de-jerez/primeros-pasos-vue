@@ -58,6 +58,7 @@ function comprar() {
   max-width: 700px;
   margin: 32px auto;
   padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .no-encontrado {
@@ -139,5 +140,34 @@ function comprar() {
 
 .btn-comprar:hover {
   background: #357abd;
+}
+
+/* --- Adaptación para Móviles (Pantallas menores de 650px) --- */
+@media (max-width: 650px) {
+  .detalle-card {
+    flex-direction: column; 
+    gap: 20px;
+    padding: 20px; 
+  }
+
+  .detalle-img {
+    width: 100%; 
+    height: auto; 
+    max-height: 300px; 
+  }
+
+  .detalle-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .detalle-precio {
+    font-size: 1.4rem;
+  }
+
+  .btn-volver {
+    width: 100%;
+    text-align: center;
+    margin-top: 12px; 
+  }
 }
 </style>

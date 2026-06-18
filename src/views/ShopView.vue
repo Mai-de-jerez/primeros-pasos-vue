@@ -83,4 +83,23 @@ function lanzarToastProducto({ producto, cantidad }) {
   margin: 0;
   white-space: nowrap;
 }
+
+@media (max-width: 600px) {
+  .tienda-header {
+    flex-direction: column;
+    align-items: stretch; 
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .tienda-titulo {
+    white-space: normal;
+  }
+
+  .tienda-header :deep(input), 
+  .tienda-header > * {
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}
 </style>

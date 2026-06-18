@@ -48,6 +48,7 @@ const { carrito, totalPrecio } = storeToRefs(carritoStore)
 <style scoped>
 .cart-view {
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .cart-view h3 {
@@ -140,6 +141,9 @@ li:last-child { border-bottom: none; }
   justify-content: center;
   gap: 12px;
   margin-top: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .checkout-btn {
@@ -150,6 +154,8 @@ li:last-child { border-bottom: none; }
   font-weight: 700;
   border-radius: 8px;
   transition: background 0.2s;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .checkout-btn:hover { background: #357abd; }
@@ -161,4 +167,69 @@ li:last-child { border-bottom: none; }
 }
 
 .checkout-btn.secundario:hover { background: #f0f7ff; }
+
+/* --- Media Query para Móviles --- */
+@media (max-width: 650px) {
+  .carrito-header {
+    display: none;
+  }
+
+ 
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .col-producto {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+
+  .col-cantidad, .col-unitario, .col-total {
+    display: inline-block;
+    text-align: left;
+    width: auto;
+    font-size: 0.9rem;
+  }
+
+  .col-cantidad::before {
+    content: "Cantidad: ";
+    color: #718096;
+    font-weight: normal;
+  }
+
+  .col-unitario::before {
+    content: " • Precio: ";
+    color: #718096;
+  }
+
+  .col-total {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-size: 1rem;
+    margin-top: 4px;
+  }
+  
+  .col-total::before {
+    content: "Subtotal: ";
+    color: #718096;
+    font-weight: normal;
+  }
+
+  .checkout-cta {
+    flex-direction: column; 
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+  }
+}
 </style>
